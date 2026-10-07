@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b0b0e">
+  <meta name="description" content="LOWRES — a grainy Y2K / grunge browser game hub.">
+  <title>LOWRES // browser arcade</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="scanlines"></div>
+  <header class="topbar">
+    <div class="logo">LOW<span>RES</span></div>
+    <div class="status"><i></i> SYSTEM ONLINE</div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="kicker">Y2K // WEB ARCADE // 2000-ISH</div>
+      <h1>LOWRES</h1>
+      <p>ugly on purpose. fast by accident.</p>
+      <div class="stats">
+        <span id="verified">0 VERIFIED</span>
+        <span id="catalog">0 CATALOGED</span>
+        <span id="updated">SYNCING...</span>
+      </div>
+    </section>
+
+    <section class="toolbar">
+      <input id="search" type="search" placeholder="SEARCH THE LOWRES ARCHIVE..." autocomplete="off">
+      <div id="filters" class="filters"></div>
+    </section>
+
+    <section class="notice">
+      <b>LOWRES SOURCE POLICY:</b> the updater only imports games from feeds/repos that are explicitly authorized for redistribution or embedding. Third-party catalogs are not scraped or copied without permission.
+    </section>
+
+    <section id="grid" class="grid"></section>
+    <div id="empty" class="empty hidden">NO RESULTS. TRY A DIFFERENT SEARCH.</div>
+  </main>
+
+  <footer>
+    LOWRES © 2026 // built for the browser // <a href="https://github.com/ItzVoided1/LOWRES">SOURCE</a>
+  </footer>
+  <script src="app.js"></script>
+</body>
+</html>
