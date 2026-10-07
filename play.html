@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LOWRES GAME</title>
+<style>body{margin:0;background:#09090c;color:#eee;font-family:Arial,sans-serif;display:grid;place-items:center;min-height:100vh}main{width:min(920px,94vw)}header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}a,button{color:#eee;background:#17171d;border:1px solid #3b3740;padding:8px 11px;text-decoration:none;cursor:pointer}#game{border:1px solid #3b3740;background:#101015;min-height:500px;display:grid;place-items:center;padding:16px}canvas{max-width:100%;background:#050508;border:1px solid #2d2930}h1{margin:0}.hint{color:#918c95;font:12px monospace}</style></head>
+<body><main><header><h1 id="title">LOWRES</h1><a href="index.html">← BACK</a></header><div id="game"></div><p id="hint" class="hint"></p></main>
+<script>
+const id=new URLSearchParams(location.search).get("id")||"reaction";
+const games={
+  reaction:{title:"REACTION TEST",hint:"Click the panel when it turns green.",run(){
+    const box=document.createElement("button");box.style.cssText="width:min(720px,90vw);height:420px;font-size:28px";box.textContent="WAIT...";
+    document.querySelector("#game").append(box);let armed=false,t=0;
+    function arm(){armed=false;box.textContent="WAIT...";box.style.background="#17171d";setTimeout(()=>{armed=true;t=performance.now();box.textContent="CLICK!";box.style.background="#274d24"},700+Math.random()*2200)}
+    box.onclick=()=>{if(!armed){box.textContent="TOO SOON — click to retry";box.style.background="#4d2424";return}box.textContent=Math.round(performance.now()-t)+" ms — CLICK TO RETRY";box.style.background="#17171d";armed=false;setTimeout(arm,600)};arm();
+  }},
+  clicker:{title:"LOWRES CLICKER",hint:"Click. Watch the number go up. That's it.",run(){let n=0;const b=document.createElement("button");b.style.cssText="width:400px;height:400px;font-size:42px";b.textContent="0";b.onclick=()=>b.textContent=++n;document.querySelector("#game").append(b)}},
+  dodger:{title:"DODGE DOT",hint:"Move with A/D or ←/→. Survive as long as you can.",run(){
+    const c=document.createElement("canvas");c.width=700;c.height=440;document.querySelector("#game").append(c);const x=c.getContext("2d"),keys={};let p=350,y=390,b=[];
+    addEventListener("keydown",e=>keys[e.key.toLowerCase()]=1);addEventListener("keyup",e=>keys[e.key.toLowerCase()]=0);
+    function loop(){x.clearRect(0,0,700,440);if(keys.a||keys.arrowleft)p-=5;if(keys.d||keys.arrowright)p+=5;p=Math.max(12,Math.min(688,p));if(Math.random()<.035)b.push({x:Math.random()*690+5,y:-10,s:2+Math.random()*4});b.forEach(o=>o.y+=o.s);b=b.filter(o=>o.y<460);x.fillStyle="#b5ff54";x.fillRect(p-14,y-14,28,28);x.fillStyle="#8d294d";b.forEach(o=>x.fillRect(o.x-7,o.y-7,14,14));requestAnimationFrame(loop)}loop();
+  }},
+  pong:{title:"PONG",hint:"W/S or ↑/↓ to move your paddle.",run(){
+    const c=document.createElement("canvas");c.width=760;c.height=430;document.querySelector("#game").append(c);const x=c.getContext("2d"),k={};let py=180,ay=180,bx=380,by=215,vx=4,vy=3;
+    addEventListener("keydown",e=>k[e.key.toLowerCase()]=1);addEventListener("keyup",e=>k[e.key.toLowerCase()]=0);
+    function loop(){py+=(k.w||k.arrowup?-5:0)+(k.s||k.arrowdown?5:0);py=Math.max(0,Math.min(350,py));ay+=((by-50)-ay)*.07;bx+=vx;by+=vy;if(by<7||by>423)vy*=-1;if(bx<35&&by>py&&by<py+80){vx=Math.abs(vx);vx+=.05}else if(bx>725&&by>ay&&by<ay+80)vx=-Math.abs(vx);if(bx<0||bx>760){bx=380;by=215;vx=4*(Math.random()>.5?1:-1)}x.fillStyle="#08080b";x.fillRect(0,0,760,430);x.strokeStyle="#34313a";x.setLineDash([8,10]);x.beginPath();x.moveTo(380,0);x.lineTo(380,430);x.stroke();x.setLineDash([]);x.fillStyle="#eee";x.fillRect(20,py,12,80);x.fillRect(728,ay,12,80);x.fillRect(bx-7,by-7,14,14);requestAnimationFrame(loop)}loop();
+  }}
+};
+document.querySelector("#title").textContent=games[id]?.title||"LOWRES MINI GAME";document.querySelector("#hint").textContent=games[id]?.hint||"Have fun."; (games[id]||games.reaction).run();
+</script></body></html>
