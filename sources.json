@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "policy": "Only add sources when LOWRES has permission to redistribute, mirror, or embed the game content.",
+  "sources": [
+    {
+      "id": "authorized-json-feed",
+      "enabled": false,
+      "type": "json",
+      "url": "https://example.com/lowres-games.json",
+      "notes": "Replace with a feed you are authorized to use. Expected format: { games: [{ title, category, description, playUrl, tags, license }] }"
+    }
+  ]
+}
